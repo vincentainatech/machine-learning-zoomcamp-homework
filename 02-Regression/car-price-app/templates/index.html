@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Car Price Estimator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="logo"><span class="logo-icon">⬡</span><span class="logo-text">MSRP<strong>AI</strong></span></div>
+      <p class="tagline">Know your car's true value before you sell</p>
+    </div>
+  </header>
+  <main>
+    <div class="layout">
+      <section class="form-panel">
+        <h2 class="panel-title">Tell us about your car</h2>
+        <form id="carForm">
+          <div class="form-group"><label>Make / Brand</label><input type="text" id="make" name="make" placeholder="e.g. Toyota" required /></div>
+          <div class="form-group"><label>Model</label><input type="text" id="model" name="model" placeholder="e.g. Corolla" required /></div>
+          <div class="form-row">
+            <div class="form-group"><label>Year</label><input type="number" id="year" name="year" min="1990" max="2017" placeholder="e.g. 2015" required /></div>
+            <div class="form-group"><label>Doors</label><select id="number_of_doors" name="number_of_doors"><option value="2">2</option><option value="3">3</option><option value="4" selected>4</option></select></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Engine HP</label><input type="number" id="engine_hp" name="engine_hp" placeholder="e.g. 150" /></div>
+            <div class="form-group"><label>Cylinders</label><input type="number" id="engine_cylinders" name="engine_cylinders" placeholder="e.g. 4" /></div>
+          </div>
+          <div class="form-group"><label>Fuel Type</label><select id="engine_fuel_type" name="engine_fuel_type"><option value="regular_unleaded">Regular Unleaded</option><option value="premium_unleaded_(required)">Premium Unleaded</option><option value="diesel">Diesel</option><option value="electric">Electric</option></select></div>
+          <div class="form-group"><label>Transmission</label><select id="transmission_type" name="transmission_type"><option value="automatic">Automatic</option><option value="manual">Manual</option><option value="automated_manual">Automated Manual</option></select></div>
+          <div class="form-group"><label>Driven Wheels</label><select id="driven_wheels" name="driven_wheels"><option value="front_wheel_drive">Front Wheel Drive</option><option value="rear_wheel_drive">Rear Wheel Drive</option><option value="all_wheel_drive">All Wheel Drive</option><option value="four_wheel_drive">Four Wheel Drive</option></select></div>
+          <div class="form-row">
+            <div class="form-group"><label>City MPG</label><input type="number" id="city_mpg" name="city_mpg" placeholder="e.g. 25" /></div>
+            <div class="form-group"><label>Highway MPG</label><input type="number" id="highway_mpg" name="highway_mpg" placeholder="e.g. 32" /></div>
+          </div>
+          <div class="form-group"><label>Vehicle Size</label><select id="vehicle_size" name="vehicle_size"><option value="compact">Compact</option><option value="midsize" selected>Midsize</option><option value="large">Large</option></select></div>
+          <div class="form-group"><label>Vehicle Style</label><select id="vehicle_style" name="vehicle_style"><option value="sedan">Sedan</option><option value="suv">SUV</option><option value="coupe">Coupe</option><option value="convertible">Convertible</option><option value="wagon">Wagon</option><option value="hatchback">Hatchback</option></select></div>
+          <div class="form-group"><label>Market Category</label><select id="market_category" name="market_category"><option value="crossover">Crossover</option><option value="luxury">Luxury</option><option value="performance">Performance</option><option value="hybrid">Hybrid</option><option value="diesel">Diesel</option></select></div>
+          <div class="form-group"><label>Popularity Score <span class="hint">(1–5000)</span></label><input type="number" id="popularity" name="popularity" min="1" max="5000" placeholder="e.g. 1000" /></div>
+          <button type="submit" class="btn-predict" id="submitBtn"><span class="btn-text">Estimate Price</span><span class="btn-spinner" style="display:none">Calculating…</span></button>
+        </form>
+      </section>
+      <section class="result-panel">
+        <div class="result-placeholder" id="placeholder"><div class="placeholder-icon">🚗</div><p>Fill in your car details and we'll estimate its MSRP instantly.</p></div>
+        <div class="result-content" id="resultContent" style="display:none">
+          <p class="result-label">Estimated MSRP</p>
+          <div class="price-main" id="priceMain">—</div>
+          <div class="price-range">
+            <div class="range-item"><span class="range-label">Conservative</span><span class="range-value" id="priceLow">—</span></div>
+            <div class="range-divider"></div>
+            <div class="range-item"><span class="range-label">Optimistic</span><span class="range-value" id="priceHigh">—</span></div>
+          </div>
+          <div class="result-meta">
+            <p class="meta-title">What affects this estimate?</p>
+            <ul class="meta-list">
+              <li>🗓️ <strong>Age</strong> — Newer cars hold value better</li>
+              <li>⚡ <strong>Engine HP</strong> — More power typically means higher MSRP</li>
+              <li>⛽ <strong>Fuel type</strong> — Premium & electric affect pricing</li>
+              <li>🏷️ <strong>Make & category</strong> — Luxury brands command a premium</li>
+              <li>📊 <strong>Popularity</strong> — High-demand models retain value</li>
+            </ul>
+          </div>
+          <button class="btn-reset" id="resetBtn">Estimate another car</button>
+        </div>
+        <div class="result-error" id="resultError" style="display:none"><div class="error-icon">⚠️</div><p class="error-msg" id="errorMsg">Something went wrong. Please check your inputs and try again.</p></div>
+      </section>
+    </div>
+  </main>
+  <footer><p>Estimates based on a linear regression model trained on ~11,000 cars. For guidance only.</p></footer>
+  <script src="/static/app.js"></script>
+</body>
+</html>
